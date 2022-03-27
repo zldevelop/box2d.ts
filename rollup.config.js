@@ -5,7 +5,7 @@ export default [
   {
     input: "src/index.ts",
     output: {
-      file: "./dist/box2d.umd.js",
+      file: "./dist/box2d.js",
       format: "es",
       sourcemap: false
     },
