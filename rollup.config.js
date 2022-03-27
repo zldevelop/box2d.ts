@@ -1,14 +1,33 @@
 import typescript from "rollup-plugin-typescript2";
+import dts from "rollup-plugin-dts";
 
-export default {
-  input: "src/index.ts",
-  output: {
-    file: "./dist/box2d.umd.js",
-    name: "b2",
-    format: "umd",
-    sourcemap: true
+export default [
+  {
+    input: "src/index.ts",
+    output: {
+      file: "./dist/box2d.umd.js",
+      format: "es",
+      sourcemap: false
+    },
+    plugins: [
+      typescript({ 
+        clean: true, 
+        tsconfigOverride: { 
+          compilerOptions: { 
+            target: "ESNext", 
+            module: "ESNext", 
+            declaration: true
+          } 
+        }
+      }),
+    ]
   },
-  plugins: [
-    typescript({ clean: true, tsconfigOverride: { compilerOptions: { target: "ES2015", module: "ES2015", declaration: false } } }),
-  ]
-};
+  {
+    input: "./dist/index.d.ts",
+    output: {
+      file: "./dist/box2d.d.ts",
+      format: "es"
+    },
+    plugins: [dts()]
+  }
+]
